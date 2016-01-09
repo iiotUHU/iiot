@@ -225,28 +225,17 @@ void calibrar(){
      }*/
      
   }
- 
- 
- 
- 
- 
-  
-  
+
 }
 
 void abrir(){
-  valorBarrera=2;
+  valorBarrera=90;
    
-  lcd.clear();
-  lcd.print("aki");
-   Serial.println("aki");
-  while(valorBarrera!=1){
-   Serial.println("mete valor");
-  valorBarrera = Serial.parseInt();            // reads the value of the potentiometer (value between 0 and 1023) 
-  Serial.println(valorBarrera);
-  valorBarrera = map(valorBarrera, 0, 1023, 0, 179);     // scale it to use it with the servo (value between 0 and 180) 
-  barrera.write(valorBarrera);                  // sets the servo position according to the scaled value 
-  delay(15);    }      
+  
+  valorBarrera = map(valorBarrera, 0, 1023, 0, 179);    
+  barrera.write(valorBarrera);            
+  delay(5000);  
+  barrera.write(0);
   
 }
 
