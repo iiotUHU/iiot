@@ -136,25 +136,18 @@ int valorLookUp(int entrada){
      //La calibracion se realiza a traves de una regresion por cuadrados minimos.
       int i=0;
       boolean encontrado=false;
-      while(i+1<NUMVALORESFOTO && !encontrado){
-        
-        
-        if(i+1>=entrada)
-        {
-          
-          int x=entrada;
-          int x0=tablalu[i][1];
-          int x1=tablalu[i+1][1];
-          int y0=tablalu[i][0];
-          int y1=tablalu[i+1][0];
-          encontrado=true;
-          resultado= y0+(((x-x0)/(x1-x0))*(y1-y0));
-        }
-        i++;
-        
-        
-        
+      while( i + 1 <NUMVALORESFOTO && !encontrado){
+      if(tablalu[i + 1][1] >= entrada){
+        float x=entrada;
+        float x0=tablalu[i][1];
+        float x1=tablalu[i+1][1];
+        float y0=tablalu[i][0];
+        float y1=tablalu[i+1][0];
+        encontrado=true;
+        resultado= y0+(((x-x0)/(x1-x0))*(y1-y0));
       }
+      i++;
+    }
   }
     
   return resultado;
@@ -231,9 +224,6 @@ int calibraLDR(){
     Serial.println(" lux");
     
     return resultado;
-    
-    
-  
 }
 
 int calibraUltrasonico(){
