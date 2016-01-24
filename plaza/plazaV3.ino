@@ -162,14 +162,13 @@ int valorLookUp(int entrada){
     //La calibracion se realiza a traves de una regresion por cuadrados minimos.
     int i=0;
     boolean encontrado=false;
-    while(i+1<NUM_VALORES_FOTO && !encontrado){
-      if(i+1>=entrada){
-        
-        int x=entrada;
-        int x0=tablaLumen[i][1];
-        int x1=tablaLumen[i+1][1];
-        int y0=tablaLumen[i][0];
-        int y1=tablaLumen[i+1][0];
+    while( i + 1 <NUMVALORESFOTO && !encontrado){
+      if(tablaLumen[i + 1][1] >= entrada){
+        float x=entrada;
+        float x0=tablaLumen[i][1];
+        float x1=tablaLumen[i+1][1];
+        float y0=tablaLumen[i][0];
+        float y1=tablaLumen[i+1][0];
         encontrado=true;
         resultado= y0+(((x-x0)/(x1-x0))*(y1-y0));
       }
