@@ -22,7 +22,7 @@ const int minmediamovil=9;//valor minimo correcto para el ultrasonido (media mov
 const int tolmediamovil=2;//valor de tolerancia para ultrasonido (media movil)
 
 const int ESCENARIOSCALIBRAR=5; //numero de escenarios para calibrar
-const char escenarios [ESCENARIOSCALIBRAR][200]={"VACIO","CORTO","LARGO","ALTO","BAJO"}; //nombre de los escenarios a calibrar
+const char escenarios [ESCENARIOS_CALIBRAR][6]={"VACIO","BAJO","ALTO"}; //nombre de los escenarios a calibrar
 int mediasfoto[ESCENARIOSCALIBRAR];
 int mediasultra[ESCENARIOSCALIBRAR];
 
@@ -88,11 +88,9 @@ void loop(){
     
     case '1':
     
-     for(int i=0;i<ESCENARIOSCALIBRAR;i++)
-     {
+     for(int i=0;i<ESCENARIOSCALIBRAR;i++){
          while (Serial.read() !='0') {
              Serial.println("INTRODUZCA 0 PARA CONTINUAR");
-
          }
        Serial.println(escenarios[i]);
        
@@ -202,11 +200,8 @@ int calibraLDR(){
               k--;
             }
             medidas[j]=valor;
-        
-          
         }
     delay(5000);
-      
   }
 
     /*for(int i=0;i<NMEDIDAS;i++){
