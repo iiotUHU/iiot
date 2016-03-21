@@ -23,16 +23,16 @@ FuzzySet* cocheAlto = new FuzzySet(0, 0, 127.5, 142.5);
 FuzzySet* cocheBajo = new FuzzySet(127.5, 142.5, 155, 165);
 FuzzySet* noExisteCoche = new FuzzySet(165, 170, 210, 210);
 */
+
 //Etiquetas salida
-//FuzzySet* noHayCoche = new FuzzySet(0, 0, 0, 0);
-//FuzzySet* hayCoche = new FuzzySet(1, 1, 1, 1);
 FuzzySet* noHayCoche = new FuzzySet(0, 0, 40, 60);
 FuzzySet* hayCoche = new FuzzySet(40, 60, 100, 100);
 
+//Definición de etiquetas creándolas con los datos cargados anteriormente
 FuzzySet* noExisteLuz;
 FuzzySet* existeLuz;
 
-//Etiquetas distancia (Multiplicado por 10)
+//Etiquetas distancia
 FuzzySet* cocheAlto;
 FuzzySet* cocheBajo;
 FuzzySet* noExisteCoche;
@@ -431,7 +431,6 @@ void initFuzzy(){
   int cuarto = (mediasFoto[1] - mediasFoto[0])/4;
   int punto1 = mediasFoto[0] - cuarto;
   int punto2 = mediasFoto[1] + cuarto;
-  //noExisteLuz = new FuzzySet(0, 0, punto1, punto2);
   existeLuz = new FuzzySet(0, 0, punto1, punto2);
   Serial.print("Puntos etiqueta existe luz ");
   Serial.print(0);
@@ -442,7 +441,6 @@ void initFuzzy(){
   Serial.print(", ");
   Serial.print(punto2);
   Serial.println();
-  //existeLuz = new FuzzySet(punto1, punto2, 1000, 1000);
   noExisteLuz = new FuzzySet(punto1, punto2, 2000, 2000);
   Serial.print("Puntos etiqueta no existe luz ");
   Serial.print(punto1);
@@ -528,42 +526,42 @@ void initFuzzy(){
  FuzzyRuleConsequent* thenNoHayCoche = new FuzzyRuleConsequent();
  thenNoHayCoche->addOutput(noHayCoche);
  
- // Regla 1 - Si existe luz y no existe distancia, existe un coche
+ // Regla 1 - Si no existe luz y no existe distancia, existe un coche
  FuzzyRuleAntecedent* siNoExisteLuzYnoExisteCoche = new FuzzyRuleAntecedent(); //Creando antecedente
  siNoExisteLuzYnoExisteCoche->joinWithAND(noExisteLuz, noExisteCoche); //Añadiendo etiquetas al antecedente
  
  FuzzyRule* fuzzyRule01 = new FuzzyRule(1, siNoExisteLuzYnoExisteCoche, thenHayCoche); // Creando la regla
  fuzzy->addFuzzyRule(fuzzyRule01); // Añadiendo regla al conjunto de reglas
   
- // Regla 2 - Si existe luz y coche alto, existe un coche
+ // Regla 2 - Si no existe luz y coche alto, existe un coche
  FuzzyRuleAntecedent* siNoExisteLuzYcocheAlto = new FuzzyRuleAntecedent();
  siNoExisteLuzYcocheAlto->joinWithAND(noExisteLuz, cocheAlto);
  
  FuzzyRule* fuzzyRule02 = new FuzzyRule(2, siNoExisteLuzYcocheAlto, thenHayCoche);
  fuzzy->addFuzzyRule(fuzzyRule02);
 
- // Regla 3 - Si existe luz y coche bajo, existe un coche
+ // Regla 3 - Si no existe luz y coche bajo, existe un coche
  FuzzyRuleAntecedent* siNoExisteLuzYcocheBajo = new FuzzyRuleAntecedent();
  siNoExisteLuzYcocheBajo->joinWithAND(noExisteLuz, cocheBajo);
  
  FuzzyRule* fuzzyRule03 = new FuzzyRule(3, siNoExisteLuzYcocheBajo, thenHayCoche);
  fuzzy->addFuzzyRule(fuzzyRule03);
 
- // Regla 4 - Si no existe luz y no existe distancia, no existe un coche
+ // Regla 4 - Si existe luz y no existe distancia, no existe un coche
  FuzzyRuleAntecedent* siExisteLuzYnoExisteCoche = new FuzzyRuleAntecedent();
  siExisteLuzYnoExisteCoche->joinWithAND(existeLuz, noExisteCoche);
  
  FuzzyRule* fuzzyRule04 = new FuzzyRule(4, siExisteLuzYnoExisteCoche, thenNoHayCoche);
  fuzzy->addFuzzyRule(fuzzyRule04);
 
- // Regla 5 - Si no existe luz y coche Alto, existe un coche
+ // Regla 5 - Si existe luz y coche Alto, existe un coche
  FuzzyRuleAntecedent* siExisteLuzYcocheAlto = new FuzzyRuleAntecedent();
  siExisteLuzYcocheAlto->joinWithAND(existeLuz, cocheAlto);
  
  FuzzyRule* fuzzyRule05 = new FuzzyRule(5, siExisteLuzYcocheAlto, thenHayCoche);
  fuzzy->addFuzzyRule(fuzzyRule05);
 
- // Regla 6 - Si no existe luz y coche bajo, no existe un coche
+ // Regla 6 - Si existe luz y coche bajo, no existe un coche
  FuzzyRuleAntecedent* siExisteLuzYcocheBajo = new FuzzyRuleAntecedent();
  siExisteLuzYcocheBajo->joinWithAND(existeLuz, cocheBajo);
  
@@ -610,7 +608,3 @@ int getFuzzyValue(float luz, int distancia){
 
   return coche;
 }
-
-
-
-
